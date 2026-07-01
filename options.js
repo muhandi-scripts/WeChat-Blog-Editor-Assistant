@@ -212,3 +212,36 @@ function extractKeys(html) {
 
 // 初始化
 loadTemplates();
+
+// 加载日志
+function loadLogs() {
+  chrome.storage.local.get({ extensionLogs: [] }, (data) => {
+    const logs = data.extensionLogs;
+    const logContent = document.getElementById('logContent');
+    if (logs.length === 0) {
+      logContent.textContent = '暂无日志';
+      return;
+    }
+    // 倒序显示（最新的在前）
+    const reversed = logs.slice().reverse();
+    const lines = reversed.map(entry => {
+      const time = entry.timestamp;
+      const level = entry.level.toUpperCase();
+      const msg = entry.message;
+      return `[${time}] [${level}] ${msg}`;
+    });
+    logContent.textContent = lines.join('\n');
+  });
+}
+
+// 清空日志
+document.getElementById('clearLogs').addEventListener('click', () => {
+  if (confirm('确定清空所有日志吗？')) {
+    chrome.storage.local.set({ extensionLogs: [] }, loadLogs);
+  }
+});
+
+document.getElementById('refreshLogs').addEventListener('click', loadLogs);
+
+// 初始加载
+loadLogs();

@@ -488,3 +488,30 @@ function parseObjectLiteral(text) {
   }
 }
 window.parseObjectLiteral=parseObjectLiteral;
+
+// 日志函数
+function log2local(message, level = 'info') {
+  // 输出到控制台
+  console.log(`[WeChatEditor] ${message}`);
+  // 构造日志条目
+  const entry = {
+    timestamp: new Date().toISOString(),
+    level: level,
+    message: message.toString()
+  };
+  
+  // 读取现有日志，追加，存储
+  chrome.storage.local.get({ extensionLogs: [] }, (data) => {
+    const logs = data.extensionLogs;
+    logs.push(entry);
+    // 限制日志数量（例如保留最近 500 条）
+    if (logs.length > 500) {
+      logs.splice(0, logs.length - 500);
+    }
+    chrome.storage.local.set({ extensionLogs: logs });
+  });
+}
+window.log2local=log2local;
+// 可选：封装 warn 和 error
+function logWarn(message) { log2local(message, 'warn'); }
+function logError(message) { log2local(message, 'error'); }

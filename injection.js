@@ -8,6 +8,7 @@ const scriptsToInject = [
   "libs/mathjax-config.js", 
   "libs/MathJax/tex-svg.js",
   "libs/MathJax/double-struck.js",
+  "libs/MathJax/script.js",
   "func/svg-processor.js",
   "func/math.js",
   "func/content.common.js",

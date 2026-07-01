@@ -6,6 +6,8 @@
 * 套用模版
 * 将数学公式转换为 svg
 
+当latex字体缺失时，增加了日志，在option页查看
+
 ### wechat blog editor assistant
 main function:
 * html editor

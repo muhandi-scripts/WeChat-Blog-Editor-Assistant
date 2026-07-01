@@ -14490,7 +14490,7 @@
                 return Vl(this, void 0, void 0, (function*() {
                     return e.failed ? Promise.reject() : (e.promise || (e.promise = zn(this.dynamicFileName(e)).catch((t => {
                         e.failed = !0,
-                        console.log(t)
+                        log2local(t)
                     }
                     ))),
                     e.promise.then(( () => e.setup(this))))
